@@ -5,72 +5,133 @@
  * @format
  * @flow strict-local
  */
-
 import React from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
   ScrollView,
+  Button,
   View,
   Text,
-  StatusBar,
+  TextInput,
+  FlatList,
 } from 'react-native';
-
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-const App: () => React$Node = () => {
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Todo from './Components/Todo';
+const App = () => {
   return (
-    < >
-      <View style={{backgroundColor:"violet"}}>
-        <Text>Hello Sangavi</Text>
+    <ScrollView style={styles.container}>
+      <View>
+        <Text style={styles.textStyle}>
+          {' '}
+          <FontAwesome5
+            name={'clipboard-list'}
+            solid
+            size={30}
+            color={'green'}
+          />{' '}
+          Goal Setter
+        </Text>
       </View>
-        
-    </>
+      <View style={styles.box}>
+        <View flexDirection={'row'}>
+          <View marginLeft={30}>
+            <Text>Task Assigned</Text>
+            <View style={styles.innerbox}>
+              <Text style={styles.textInnerBox}>9</Text>
+            </View>
+          </View>
+          <View marginLeft={30}>
+            <Text>Task Completed</Text>
+
+            <View style={styles.innerbox}>
+              <Text
+                alignItems="center"
+                alignItems="center"
+                justifyContent="center"
+                alignSelf="center">
+                9
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+
+      <View flexDirection={'row'} style={styles.outerTextInput}>
+        <View>
+          <TextInput style={styles.textInput} placeholder="Enter your todo's" />
+        </View>
+        <View style={styles.button}>
+          <Button title="Add Task" color="green"></Button>
+        </View>
+      </View>
+      <View>
+        <Text style={styles.textStyle}>Your Todo's</Text>
+      </View>
+    </ScrollView>
   );
 };
-
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: '#DAE0E2',
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
+  textStyle: {
+    marginTop: 20,
+    marginLeft: 10,
+    fontSize: 20,
+    color: '#7B0B48',
+    fontFamily: 'Acme-Regular',
   },
-  body: {
-    backgroundColor: Colors.white,
+  button: {
+    marginTop: 35,
+    marginLeft: 10,
   },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  box: {
+    width: 320,
+    height: 130,
+    left: 35,
+    top: 30,
+    padding: 20,
+    justifyContent: 'center',
+    textAlign: 'center',
+    backgroundColor: '#e8e9eb',
+    elevation: 10,
+    position: 'relative',
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
+  textInput: {
+    height: 40,
+    width: 200,
+    borderColor: '#7B0B48',
+    borderRadius: 6,
+    backgroundColor: '#CFBFCF',
+    borderWidth: 2,
+    marginTop: 45,
+    marginBottom: 10,
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
+  innerbox: {
+    width: 50,
+    height: 30,
+    left: 10,
+    top: 10,
+    padding: 10,
+    justifyContent: 'center',
+    textAlign: 'center',
+    backgroundColor: '#CFBFCF',
+    elevation: 10,
+    position: 'relative',
   },
-  highlight: {
-    fontWeight: '700',
+  outerTextInput: {
+    justifyContent: 'center',
+    alignSelf: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
   },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
+  textInnerBox: {
+    alignItems: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
   },
 });
 
