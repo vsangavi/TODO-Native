@@ -5,7 +5,7 @@
  * @format
  * @flow strict-local
  */
-import React from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   ScrollView,
@@ -13,11 +13,51 @@ import {
   View,
   Text,
   TextInput,
-  FlatList,
 } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Todo from './Components/Todo';
+import Display from './Components/Display';
 const App = () => {
+  let [todo, setTodo] = useState('');
+  let [list, setList] = useState([]);
+  const [taskCount, settaskCount] = useState(0);
+  const [completedTask, setcompletedTask] = useState(0);
+  const clickHandler = (e) => {
+    e.preventDefault();
+    if (todo.length === 0) {
+      return;
+    }
+    const newTodo = {
+      todo,
+      id: Date.now(),
+      isCompleted: false,
+    };
+    settaskCount(taskCount + 1);
+    let newlist = list;
+    newlist.push(newTodo);
+    setList(newlist);
+    setTodo('');
+  };
+  const handlePress = (item) => {
+    const id = item.id;
+    const updatedList = list.filter((item) => item.id !== id);
+    setList(updatedList);
+    settaskCount(taskCount - 1);
+    setcompletedTask(completedTask + 1);
+    alert(`${id}`);
+  };
+  const handleTaskComplete = (item) => {
+    const id = item.id;
+    const findId = (todo) => todo.id === id;
+    const index = list.findIndex(findId);
+    let data = {
+      ...item,
+      isCompleted: true,
+    };
+    let todos = [...list];
+    todos[index] = data;
+    setList(todos);
+  };
   return (
     <ScrollView style={styles.container}>
       <View>
@@ -33,40 +73,30 @@ const App = () => {
         </Text>
       </View>
       <View style={styles.box}>
-        <View flexDirection={'row'}>
-          <View marginLeft={30}>
-            <Text>Task Assigned</Text>
-            <View style={styles.innerbox}>
-              <Text style={styles.textInnerBox}>9</Text>
-            </View>
-          </View>
-          <View marginLeft={30}>
-            <Text>Task Completed</Text>
-
-            <View style={styles.innerbox}>
-              <Text
-                alignItems="center"
-                alignItems="center"
-                justifyContent="center"
-                alignSelf="center">
-                9
-              </Text>
-            </View>
-          </View>
-        </View>
+        <Display taskCount={taskCount} completedTask={completedTask} />
       </View>
-
       <View flexDirection={'row'} style={styles.outerTextInput}>
         <View>
-          <TextInput style={styles.textInput} placeholder="Enter your todo's" />
+          <TextInput
+            style={styles.textInput}
+            value={todo}
+            onChangeText={(value) => setTodo(value)}
+            placeholder="Enter your todo's"
+          />
         </View>
         <View style={styles.button}>
-          <Button title="Add Task" color="green"></Button>
+          <Button
+            title="Add Task"
+            color="green"
+            onPress={clickHandler}></Button>
         </View>
       </View>
-      <View>
-        <Text style={styles.textStyle}>Your Todo's</Text>
-      </View>
+
+      <Todo
+        list={list}
+        handlePress={handlePress}
+        handleTaskComplete={handleTaskComplete}
+      />
     </ScrollView>
   );
 };
@@ -76,13 +106,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: '#DAE0E2',
   },
-  textStyle: {
-    marginTop: 20,
-    marginLeft: 10,
-    fontSize: 20,
-    color: '#7B0B48',
-    fontFamily: 'Acme-Regular',
-  },
+
   button: {
     marginTop: 35,
     marginLeft: 10,
@@ -109,30 +133,19 @@ const styles = StyleSheet.create({
     marginTop: 45,
     marginBottom: 10,
   },
-  innerbox: {
-    width: 50,
-    height: 30,
-    left: 10,
-    top: 10,
-    padding: 10,
-    justifyContent: 'center',
-    textAlign: 'center',
-    backgroundColor: '#CFBFCF',
-    elevation: 10,
-    position: 'relative',
-  },
   outerTextInput: {
     justifyContent: 'center',
     alignSelf: 'center',
     alignItems: 'center',
     alignContent: 'center',
   },
-  textInnerBox: {
-    alignItems: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'center',
+  textStyle: {
+    marginTop: 20,
+    marginLeft: 10,
+    fontSize: 25,
+    color: '#7B0B48',
+    fontFamily: 'Acme-Regular',
   },
 });
-
 export default App;
+
