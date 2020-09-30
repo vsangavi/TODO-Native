@@ -21,7 +21,10 @@ const Todo = (props) => {
           <View key={item.id} style={{flexDirection: 'row'}}>
             <View style={styles.item}>
               <TouchableOpacity onPress={() => handleTaskComplete(item)}>
-                <Text style={item.isCompleted && {color: 'blue'}}>
+                <Text
+                  style={
+                    item.isCompleted && {textDecorationLine: 'line-through'}
+                  }>
                   {item.todo}
                 </Text>
               </TouchableOpacity>

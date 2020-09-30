@@ -42,9 +42,8 @@ const App = () => {
     const id = item.id;
     const updatedList = list.filter((item) => item.id !== id);
     setList(updatedList);
-    settaskCount(taskCount - 1);
-    setcompletedTask(completedTask + 1);
-    alert(`${id}`);
+    settaskCount(taskCount - 1); 
+  
   };
   const handleTaskComplete = (item) => {
     const id = item.id;
@@ -57,6 +56,7 @@ const App = () => {
     let todos = [...list];
     todos[index] = data;
     setList(todos);
+    setcompletedTask(completedTask + 1);
   };
   return (
     <ScrollView style={styles.container}>
@@ -148,4 +148,3 @@ const styles = StyleSheet.create({
   },
 });
 export default App;
-
